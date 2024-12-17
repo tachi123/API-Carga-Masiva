@@ -1,13 +1,59 @@
-<h2>Scripts</h2>
-
-<form action="script/addScript" method="post">
-  <textarea name="script" rows="4" cols="50" placeholder="Ingrese un script"></textarea><br>
-  <button type="submit">Agregar Script</button>
-</form>
-
-{{!-- <ul>
-    {{#each scripts}}
-        <li>{{this}}</li>
-    {{/each}}
-
-</ul> --}}
+<!-- filepath: /j:/Documents/Repositorios/ANSV-Api/src/views/scripts.hbs -->
+<section class="jumbotron bg-primary">
+    <div class="jumbotron_body">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                    <h1>Scripts de Validación</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Agregar Script</h2>
+                <form action="/script" method="POST">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="codigo">Código</label>
+                        <textarea class="form-control" id="codigo" name="codigo" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje de error</label>
+                        <input type="text" class="form-control" id="mensaje" name="mensaje" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Script</button>
+                </form>
+                <hr>
+                <h2>Lista de Scripts</h2>
+                <table class="table table-responsive-poncho">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Mensaje error</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each scripts}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.nombre}}</td>
+                            <td><pre>{{this.codigo}}</pre></td>
+                            <td>{{this.mensaje}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

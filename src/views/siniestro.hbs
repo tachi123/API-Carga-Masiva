@@ -1,0 +1,42 @@
+<section class="jumbotron bg-primary">
+    <div class="jumbotron_body">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                    <h1>Detalle del siniestro</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive-poncho">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{siniestro.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de carga</th>
+                        <td>{{formatDate siniestro.hora_carga}}</td>
+                    </tr>
+                    <tr>
+                        <th>Número de formulario</th>
+                        <td>{{siniestro.numero_formulario}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de siniestro</th>
+                        <td>{{siniestro.tipo_siniestro}}</td>
+                    </tr>
+                    <tr>
+                        <th>Datos adicionales</th>
+                        <td>{{#iterateJson siniestro.data}}{{/iterateJson}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

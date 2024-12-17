@@ -14,6 +14,7 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
+            <button id="ejecutar-scripts" class="btn btn-primary">Ejecutar scripts nuevamente</button>
             <table class="table table-responsive-poncho dataTables">
             <thead>
                 <tr>
@@ -21,19 +22,19 @@
                     <th>Hora de carga</th>
                     <th>Número de formulario</th>
                     <th>Tipo de siniestro</th>
-                    <th>Cantidad de involucrados</th>
                     <th>Reporte</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {{#each siniestros}}
                     <tr class="{{#if (includes this.reporte 'exitosa')}}success-row{{else}}error-row{{/if}}">
                     <td>{{this.id}}</td>
-                    <td>{{this.hora_carga}}</td>
+                    <td>{{formatDate this.hora_carga}}</td>
                     <td>{{this.numero_formulario}}</td>
                     <td>{{this.tipo_siniestro}}</td>
-                    <td>{{count this.involucrado}}</td>
                     <td>{{{this.reporte}}}</td>
+                    <td><a href="/siniestro/{{this.id}}">Ver</a></td>
                     
                     <!-- Agrega más celdas según los campos de tus siniestros -->
                     </tr>
@@ -44,3 +45,20 @@
     </div>    
 </section>
 <a href="/">Volver</a>
+
+
+
+<script>
+document.getElementById('ejecutar-scripts').addEventListener('click', function() {
+    fetch('/siniestro/ejecutar-scripts', {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            alert('Scripts ejecutados exitosamente');
+            location.reload();
+        } else {
+            alert('Error al ejecutar scripts');
+        }
+    });
+});
+</script>

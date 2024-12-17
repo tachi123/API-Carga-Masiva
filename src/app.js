@@ -1,15 +1,15 @@
 import express from 'express';
-import { create } from 'express-handlebars';
+import { create }  from 'express-handlebars';
 import __dirname from './utils.js';
 import dotenv from "dotenv";
+import sequelize from './config/database.js';
+import moment from 'moment';
+import Handlebars from 'handlebars';
 
 //Routers
 import siniestroRouter from './routes/siniestro.router.js';
 import userRouter from './routes/user.router.js';
 import scriptRouter from './routes/script.router.js';
-
-//Import para inicializar
-import { inicializarSiniestros } from './controllers/siniestro.controller.js';
 
 const app = express();
 
@@ -36,6 +36,26 @@ const hbs = create({
     },
     count: function (array) {
       return array ? array.length : 0;
+    },
+    formatDate: function (date) {
+      return moment(date).format('DD/MM/YYYY');
+    },
+    iterateJson: function (context, options) {
+      function iterate(obj) {
+        let result = '<ul>';
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+              result += `<li>${key}: ${iterate(obj[key])}</li>`;
+            } else {
+              result += `<li>${key}: ${obj[key]}</li>`;
+            }
+          }
+        }
+        result += '</ul>';
+        return result;
+      }
+      return new Handlebars.SafeString(iterate(context));
     }
   }
 });
@@ -52,7 +72,9 @@ app.use('/siniestro', siniestroRouter);
 app.use('/script', scriptRouter);
 
 // Cargar siniestros al iniciar la aplicación
-inicializarSiniestros().then(() => {
+//inicializarSiniestros().then(() => {
+// Sincronizar el modelo con la base de datos
+sequelize.sync().then(() => {
   // Start the server
   app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);

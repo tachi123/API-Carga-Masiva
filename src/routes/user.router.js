@@ -1,11 +1,10 @@
 import { Router }  from 'express';
+import { getDashboardStats } from '../controllers/siniestro.controller.js';
 
 const router = Router();
 
 // Routes
-router.get('/', (req, res) => {
-    res.render('index');
-});
+router.get('/', getDashboardStats);
 
 router.get('/carga-siniestros', (req, res) => {
     res.render('carga-siniestros');
