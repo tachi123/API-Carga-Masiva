@@ -1,0 +1,28 @@
+<section>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h1>Cargar Siniestros Viales</h1>
+      <p>Acepta un archivo json con un array de siniestros. La validación de la estructura es posterior a la importación</p>
+      <hr>
+      <form action="/siniestro/upload" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>
+            <h3>Archivo</h3>
+          </legend>
+          <div class="row">
+            <div class="col-md-8 form-group item-form">
+              <label for="file">Archivo</label>
+              <input type="file" name="siniestrosFile" class="form-control" id="siniestrosFile" required="" aria-required="true">
+              <p class="help-block error hidden">Ingresá un archivo</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary">Cargar</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>

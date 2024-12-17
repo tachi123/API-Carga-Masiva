@@ -1,0 +1,64 @@
+<!-- views/dashboard.hbs -->
+
+<h1>Dashboard</h1>
+
+<label for="fileSelect">Seleccionar Archivo:</label>
+<select id="fileSelect" name="file">
+    {{#each siniestros}}
+        <option value="{{@index}}">{{@index}}</option>
+    {{/each}}
+</select><br><br>
+
+
+<label for="scriptSelect">Seleccionar Script:</label>
+<select id="scriptSelect" name="script">
+  {{#each scripts}}
+    <option value="{{@index}}">{{this}}</option>
+  {{/each}}
+</select><br><br>
+
+
+<button id="runScriptButton">Ejecutar Script</button>
+
+
+<div id="results"></div>
+
+
+<script>
+  const runScriptButton = document.getElementById('runScriptButton');
+  const resultsDiv = document.getElementById('results');
+
+  runScriptButton.addEventListener('click', async () => {
+    const selectedScriptIndex = document.getElementById('scriptSelect').value;
+    const selectedFileIndex = document.getElementById('fileSelect').value;
+
+
+    try {
+      const response = await fetch('/runScript', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ scriptIndex: selectedScriptIndex, fileIndex: selectedFileIndex })
+
+      });
+      
+      const data = await response.json();
+
+
+      if (data.success) {
+        resultsDiv.innerHTML = `<pre>${JSON.stringify(data.results, null, 2)}</pre>`; 
+      } else {
+        resultsDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+    }
+
+  });
+
+</script>
+
+
+<a href="/">Volver</a>

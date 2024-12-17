@@ -1,0 +1,46 @@
+<!-- views/siniestros.hbs -->
+<section class="jumbotron bg-primary">
+    <div class="jumbotron_body">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                    <h1>Siniestros</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive-poncho dataTables">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hora de carga</th>
+                    <th>Número de formulario</th>
+                    <th>Tipo de siniestro</th>
+                    <th>Cantidad de involucrados</th>
+                    <th>Reporte</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each siniestros}}
+                    <tr class="{{#if (includes this.reporte 'exitosa')}}success-row{{else}}error-row{{/if}}">
+                    <td>{{this.id}}</td>
+                    <td>{{this.hora_carga}}</td>
+                    <td>{{this.numero_formulario}}</td>
+                    <td>{{this.tipo_siniestro}}</td>
+                    <td>{{count this.involucrado}}</td>
+                    <td>{{{this.reporte}}}</td>
+                    
+                    <!-- Agrega más celdas según los campos de tus siniestros -->
+                    </tr>
+                {{/each}}
+            </tbody>
+            </table>
+        </div>
+    </div>    
+</section>
+<a href="/">Volver</a>
