@@ -18,4 +18,8 @@ router.get('/dashboard', (req, res) => {
     res.render('dashboard', { siniestros, scripts });
 });
 
+router.get('/login', (req, res) => {
+    res.render('login');
+})
+
 export default router;

@@ -10,8 +10,28 @@ import Handlebars from 'handlebars';
 import siniestroRouter from './routes/siniestro.router.js';
 import userRouter from './routes/user.router.js';
 import scriptRouter from './routes/script.router.js';
+import sessionRouter from './routes/session.router.js';
+
+import session from 'express-session';
+import passport from 'passport';
+import initializePassport from './config/passport.config.js';
+import FileStore from 'session-file-store';
 
 const app = express();
+
+//Configuramos passport
+// Nota cómo conectamos session con lo que será nuestro FileStore.
+const fileStorage = FileStore(session);
+app.use(session({
+  store: new fileStorage({ path: './sessions', ttl: 100, retries: 0 }),
+  secret: 'asd3nc3okasod',
+  resave: false,
+  saveUninitialized: false
+}));
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 dotenv.config();  //process.env.PORT;
 const port = process.env.PORT || 3000;
@@ -70,6 +90,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/', userRouter);
 app.use('/siniestro', siniestroRouter);
 app.use('/script', scriptRouter);
+app.use('/session', sessionRouter);
 
 // Cargar siniestros al iniciar la aplicación
 //inicializarSiniestros().then(() => {
